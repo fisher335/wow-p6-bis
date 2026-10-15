@@ -151,7 +151,7 @@ fun HomeScreen(onPick: (ClassInfo) -> Unit) {
             item {
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    "选择职业查看 P6 阶段 BiS 装备（主选 + 2 件备选）",
+                    "选择职业查看 P6 阶段 BiS 装备（主选 + 4 件备选）",
                     fontSize = 13.sp,
                     color = Color(0xFF9A9480),
                     modifier = Modifier.padding(4.dp),

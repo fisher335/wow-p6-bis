@@ -323,7 +323,7 @@ def main():
                 if not ids:
                     continue
                 main = ids[0]
-                alts = ids[1:3]  # two alternatives
+                alts = ids[1:5]  # four alternatives
                 slots.append({"slot": e["slot"], "ids": [main] + alts})
                 ref.update([main] + alts)
             if slots:
