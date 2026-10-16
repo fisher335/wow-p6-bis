@@ -13,6 +13,7 @@ data class ItemInfo(
     val type: String?,
     val sub: String?,
     val sockets: Int,
+    val stats: Map<String, String>,
 )
 
 data class SlotEntry(val slot: String, val ids: List<Int>)
@@ -48,6 +49,7 @@ object DataRepository {
                 type = if (o.isNull("type")) null else o.optString("type"),
                 sub = if (o.isNull("sub")) null else o.optString("sub"),
                 sockets = o.optInt("sockets", 0),
+                stats = parseStats(o.optJSONObject("stats")),
             )
         }
         items = map
@@ -86,4 +88,15 @@ object DataRepository {
         }
         classes = list
     }
+}
+
+private fun parseStats(o: JSONObject?): Map<String, String> {
+    if (o == null) return emptyMap()
+    val m = LinkedHashMap<String, String>()
+    val keys = o.keys()
+    while (keys.hasNext()) {
+        val k = keys.next()
+        m[k] = o.optString(k)
+    }
+    return m
 }

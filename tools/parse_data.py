@@ -105,11 +105,19 @@ def parse_items(raw):
             return mm.group(1) if mm else None
         ilvl = re.search(r"itemLevel\s*=\s*(\d+)", body)
         sck = re.search(r"socketCount\s*=\s*(\d+)", body)
+        stats = {}
+        sm = re.search(r"stats\s*=\s*\{([^}]*)\}", body)
+        if sm:
+            for k, v in re.findall(r"([A-Za-z_0-9]+)\s*=\s*(-?[\d.]+)", sm.group(1)):
+                if k.startswith("__"):
+                    continue
+                stats[k] = v
         items[iid] = {
             "name": name, "q": quality,
             "ilvl": int(ilvl.group(1)) if ilvl else None,
             "type": g("itemType"), "sub": g("itemSubType"),
             "loc": g("equipLoc"), "sockets": int(sck.group(1)) if sck else 0,
+            "stats": stats,
         }
     return items
 
@@ -338,12 +346,14 @@ def main():
         if not it:
             missing.append(i)
             out_items[str(i)] = {"name": "未知物品", "q": None, "ilvl": None,
-                                 "loc": None, "source": pick_source(srcidx.get(i))}
+                                 "loc": None, "source": pick_source(srcidx.get(i)),
+                                 "stats": {}}
             continue
         out_items[str(i)] = {
             "name": it["name"], "q": it["q"], "ilvl": it["ilvl"],
             "loc": it["loc"], "type": it["type"], "sub": it["sub"],
-            "sockets": it["sockets"], "source": pick_source(srcidx.get(i)),
+            "sockets": it["sockets"], "stats": it.get("stats", {}),
+            "source": pick_source(srcidx.get(i)),
         }
 
     app = {"classes": classes, "items": out_items, "slotCN": SLOT_CN}

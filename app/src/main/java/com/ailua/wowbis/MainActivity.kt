@@ -10,6 +10,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -381,7 +383,11 @@ fun ItemDetailDialog(item: ItemInfo, slot: String, onClose: () -> Unit) {
                 .fillMaxWidth(0.9f)
                 .widthIn(max = 420.dp),
         ) {
-            Column(Modifier.padding(18.dp)) {
+            Column(
+                Modifier
+                    .padding(18.dp)
+                    .verticalScroll(rememberScrollState()),
+            ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     ItemIcon(item.icon, slot, item.quality, 48.dp)
                     Spacer(Modifier.width(12.dp))
@@ -409,6 +415,19 @@ fun ItemDetailDialog(item: ItemInfo, slot: String, onClose: () -> Unit) {
                 DetailLine("插槽", if (item.sockets > 0) "${item.sockets} 个" else "无")
                 if (!item.source.isNullOrEmpty()) DetailLine("来源", item.source)
 
+                if (item.stats.isNotEmpty()) {
+                    Spacer(Modifier.height(12.dp))
+                    HorizontalDivider(color = quality.copy(alpha = 0.25f))
+                    Spacer(Modifier.height(10.dp))
+                    Text("属性", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color(0xFFC79C6E))
+                    Spacer(Modifier.height(6.dp))
+                    val ordered = STAT_ORDER.filter { item.stats.containsKey(it) } +
+                        item.stats.keys.filter { it !in STAT_ORDER }
+                    ordered.forEach { k ->
+                        StatLine(statLabel(k), item.stats[k].orEmpty(), k in WEAPON_STATS)
+                    }
+                }
+
                 Spacer(Modifier.height(18.dp))
                 TextButton(
                     onClick = onClose,
@@ -427,6 +446,57 @@ fun DetailLine(label: String, value: String) {
         Text(label, fontSize = 13.sp, color = Color(0xFF9A9480), modifier = Modifier.width(56.dp))
         Text(value, fontSize = 13.sp, color = Color(0xFFE6E1D8), modifier = Modifier.weight(1f))
     }
+}
+
+@Composable
+fun StatLine(label: String, value: String, weapon: Boolean) {
+    Row(Modifier.padding(vertical = 2.dp)) {
+        Text(label, fontSize = 13.sp, color = Color(0xFF9A9480), modifier = Modifier.weight(1f))
+        Text(
+            if (weapon) value else "+$value",
+            fontSize = 13.sp,
+            color = Color(0xFF1EFF00),
+            fontWeight = FontWeight.Bold,
+        )
+    }
+}
+
+val WEAPON_STATS = setOf("WDPS", "WSPEED", "RDPS", "AMMO_DPS")
+
+val STAT_ORDER = listOf(
+    "WDPS", "WSPEED", "RDPS", "AMMO_DPS",
+    "STR", "AGI", "INT", "STA", "SPI",
+    "AP", "RAP", "SP",
+    "ARMOR", "CRIT", "HIT", "HASTE", "EXP", "ARP",
+    "DEF", "DODGE", "PARRY", "BLOCK", "BVAL", "MP5",
+)
+
+fun statLabel(k: String): String = when (k) {
+    "WDPS" -> "每秒伤害"
+    "WSPEED" -> "攻速"
+    "RDPS" -> "远程伤害"
+    "AMMO_DPS" -> "弹药伤害"
+    "STR" -> "力量"
+    "AGI" -> "敏捷"
+    "INT" -> "智力"
+    "STA" -> "耐力"
+    "SPI" -> "精神"
+    "AP" -> "攻击强度"
+    "RAP" -> "远程攻强"
+    "SP" -> "法术强度"
+    "ARMOR" -> "护甲"
+    "CRIT" -> "爆击等级"
+    "HIT" -> "命中等级"
+    "HASTE" -> "急速等级"
+    "EXP" -> "精准等级"
+    "ARP" -> "护甲穿透"
+    "DEF" -> "防御等级"
+    "DODGE" -> "躲闪等级"
+    "PARRY" -> "招架等级"
+    "BLOCK" -> "格挡等级"
+    "BVAL" -> "格挡值"
+    "MP5" -> "每5秒回蓝"
+    else -> k
 }
 
 @Composable
