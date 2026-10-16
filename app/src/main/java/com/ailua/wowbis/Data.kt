@@ -10,6 +10,9 @@ data class ItemInfo(
     val ilvl: Int,
     val icon: String?,
     val source: String?,
+    val type: String?,
+    val sub: String?,
+    val sockets: Int,
 )
 
 data class SlotEntry(val slot: String, val ids: List<Int>)
@@ -42,6 +45,9 @@ object DataRepository {
                 ilvl = o.optInt("ilvl", 0),
                 icon = if (o.isNull("icon")) null else o.optString("icon"),
                 source = if (o.isNull("source")) null else o.optString("source"),
+                type = if (o.isNull("type")) null else o.optString("type"),
+                sub = if (o.isNull("sub")) null else o.optString("sub"),
+                sockets = o.optInt("sockets", 0),
             )
         }
         items = map

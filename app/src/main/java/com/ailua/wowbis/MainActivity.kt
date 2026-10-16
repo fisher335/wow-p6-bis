@@ -5,9 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +21,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -26,6 +29,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -51,6 +55,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -261,6 +267,7 @@ fun SpecsScreen(cls: ClassInfo, onBack: () -> Unit, onPick: (SpecInfo) -> Unit) 
 
 @Composable
 fun BisScreen(cls: ClassInfo, spec: SpecInfo, onBack: () -> Unit) {
+    var selected by remember { mutableStateOf<Pair<ItemInfo, String>?>(null) }
     Scaffold(
         containerColor = Color(0xFF0B0B12),
         topBar = { AppBar("${cls.name} · ${spec.name}", "P6 阶段 BiS", onBack) },
@@ -274,15 +281,18 @@ fun BisScreen(cls: ClassInfo, spec: SpecInfo, onBack: () -> Unit) {
         ) {
             item { Spacer(Modifier.height(4.dp)) }
             items(spec.slots, key = { it.slot }) { entry ->
-                SlotCard(cls.key, entry)
+                SlotCard(cls.key, entry) { item -> selected = item to entry.slot }
             }
             item { Spacer(Modifier.height(12.dp)) }
         }
     }
+    selected?.let { (item, slot) ->
+        ItemDetailDialog(item, slot) { selected = null }
+    }
 }
 
 @Composable
-fun SlotCard(classKey: String, entry: SlotEntry) {
+fun SlotCard(classKey: String, entry: SlotEntry, onItemClick: (ItemInfo) -> Unit) {
     val items = DataRepository.items
     val slotCN = DataRepository.slotCN[entry.slot] ?: entry.slot
     val main = items[entry.ids.firstOrNull()]
@@ -308,14 +318,14 @@ fun SlotCard(classKey: String, entry: SlotEntry) {
             }
             Spacer(Modifier.height(10.dp))
             if (main != null) {
-                ItemRow(main, entry.slot, main = true)
+                ItemRow(main, entry.slot, main = true, onClick = { onItemClick(main) })
             }
             if (alts.isNotEmpty()) {
                 Spacer(Modifier.height(10.dp))
                 Text("备选", fontSize = 12.sp, color = Color(0xFF9A9480), modifier = Modifier.padding(start = 4.dp))
                 Spacer(Modifier.height(6.dp))
                 alts.forEachIndexed { idx, alt ->
-                    ItemRow(alt, entry.slot, main = false)
+                    ItemRow(alt, entry.slot, main = false, onClick = { onItemClick(alt) })
                     if (idx != alts.lastIndex) Spacer(Modifier.height(8.dp))
                 }
             }
@@ -324,9 +334,16 @@ fun SlotCard(classKey: String, entry: SlotEntry) {
 }
 
 @Composable
-fun ItemRow(item: ItemInfo, slot: String, main: Boolean) {
+fun ItemRow(item: ItemInfo, slot: String, main: Boolean, onClick: () -> Unit) {
     val color = qualityColor(item.quality)
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .clickable { onClick() }
+            .padding(4.dp),
+    ) {
         ItemIcon(item.icon, slot, item.quality, if (main) 52.dp else 40.dp)
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
@@ -349,6 +366,66 @@ fun ItemRow(item: ItemInfo, slot: String, main: Boolean) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ItemDetailDialog(item: ItemInfo, slot: String, onClose: () -> Unit) {
+    val quality = qualityColor(item.quality)
+    Dialog(onDismissRequest = onClose, properties = DialogProperties(usePlatformDefaultWidth = false)) {
+        Card(
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF0E0E16)),
+            shape = RoundedCornerShape(14.dp),
+            border = BorderStroke(1.dp, quality),
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .widthIn(max = 420.dp),
+        ) {
+            Column(Modifier.padding(18.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    ItemIcon(item.icon, slot, item.quality, 48.dp)
+                    Spacer(Modifier.width(12.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            item.name,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = quality,
+                        )
+                        if (item.ilvl > 0) {
+                            Spacer(Modifier.height(2.dp))
+                            Text("物品等级 ${item.ilvl}", fontSize = 13.sp, color = Color(0xFFFFD100))
+                        }
+                    }
+                }
+                Spacer(Modifier.height(14.dp))
+                HorizontalDivider(color = quality.copy(alpha = 0.4f))
+                Spacer(Modifier.height(12.dp))
+
+                val slotCN = DataRepository.slotCN[slot] ?: slot
+                DetailLine("部位", slotCN)
+                if (!item.type.isNullOrEmpty()) DetailLine("类型", item.type)
+                if (!item.sub.isNullOrEmpty()) DetailLine("类别", item.sub)
+                DetailLine("插槽", if (item.sockets > 0) "${item.sockets} 个" else "无")
+                if (!item.source.isNullOrEmpty()) DetailLine("来源", item.source)
+
+                Spacer(Modifier.height(18.dp))
+                TextButton(
+                    onClick = onClose,
+                    modifier = Modifier.align(Alignment.End),
+                ) {
+                    Text("关闭", color = Color(0xFFC79C6E))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DetailLine(label: String, value: String) {
+    Row(Modifier.padding(vertical = 3.dp)) {
+        Text(label, fontSize = 13.sp, color = Color(0xFF9A9480), modifier = Modifier.width(56.dp))
+        Text(value, fontSize = 13.sp, color = Color(0xFFE6E1D8), modifier = Modifier.weight(1f))
     }
 }
 
