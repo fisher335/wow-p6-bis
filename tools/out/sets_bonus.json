@@ -1,0 +1,242 @@
+﻿[
+    {
+        "key":  "Death knight|坦克|P4",
+        "en":  null,
+        "b2":  null,
+        "b4":  null
+    },
+    {
+        "key":  "Rogue|输出|P6",
+        "en":  "Conqueror\u0027s Terrorblade Battlegear",
+        "b2":  "Your Deadly Poison causes you to gain 1 energy each time it deals damage.",
+        "b4":  "Increases the damage done by your Rupture by 20%."
+    },
+    {
+        "key":  "Mage|治疗|P6",
+        "en":  "Conqueror\u0027s Kirin Tor Garb",
+        "b2":  "Your Arcane Blast, Frostbolt, Frostfire Bolt, and Fireball spells have a chance to grant you 350 spell power for 15 sec. (Proc chance: 25%, 45s cooldown)",
+        "b4":  "You have a chance for the effect of your Missile Barrage, Hot Streak, or Brain Freeze talent not to be consumed when you cast the spells which benefit."
+    },
+    {
+        "key":  "Warlock|输出|P6",
+        "en":  "Conqueror\u0027s Deathbringer Garb",
+        "b2":  "Increases the damage done by your Unstable Affliction by 20% and your Immolate by 10%.",
+        "b4":  "Increases the critical strike chance of your Shadow Bolt and Incinerate spells by 5%."
+    },
+    {
+        "key":  "Hunter|输出|P6",
+        "en":  "Conqueror\u0027s Scourgestalker Battlegear",
+        "b2":  "Increases the damage done by your Serpent Sting by 10%.",
+        "b4":  "Your Steady Shot has a chance to grant you 600 attack power for 15 sec. (Proc chance: 10%, 45s cooldown)"
+    },
+    {
+        "key":  "Warrior|输出|P6",
+        "en":  "Conqueror\u0027s Siegebreaker Battlegear",
+        "b2":  "Heroic Strike and Slam critical strikes have a chance to grant you 150 haste rating for 5 sec. (Proc chance: 40%)",
+        "b4":  "Increases the critical strike chance of Mortal Strike and Bloodthirst by 10%. (Proc chance: 40%)"
+    },
+    {
+        "key":  "Paladin|输出|P6",
+        "en":  "Conqueror\u0027s Aegis Battlegear",
+        "b2":  "Increases the damage done by your Exorcism and Hammer of Wrath abilities by 10%.",
+        "b4":  "Increases the critical strike chance of your Divine Storm and Crusader Strike abilities by 10%."
+    },
+    {
+        "key":  "Druid|物理|P6",
+        "en":  "Conqueror\u0027s Nightsong Battlegear",
+        "b2":  "The periodic damage dealt by your Rake, Rip, and Lacerate abilities has a chance to cause you to enter a Clearcasting state. (Proc chance: 2%, 15s cooldown)",
+        "b4":  "Increases the duration of Savage Roar and Survival Instinct by 8 sec."
+    },
+    {
+        "key":  "Warrior|坦克|P6",
+        "en":  "Conqueror\u0027s Siegebreaker Plate",
+        "b2":  "Increases the critical strike chance of your Devastate ability by 10%.",
+        "b4":  "Shield Block also grants you 20% reduction to magical damage taken."
+    },
+    {
+        "key":  "Priest|输出|P6",
+        "en":  "Conqueror\u0027s Sanctification Garb",
+        "b2":  "Increases the damage done by your Devouring Plague by 15%.",
+        "b4":  "Your Mind Blast also grants you 240 haste rating for 4 sec."
+    },
+    {
+        "key":  "Paladin|坦克|P6",
+        "en":  "Conqueror\u0027s Aegis Plate",
+        "b2":  "Increases the damage done by your Seals of Vengeance, Corruption, and Righteousness by 10%.",
+        "b4":  "Shield of Righteousness now increases your shield block value by 225 for that attack and for 6 sec afterward."
+    },
+    {
+        "key":  "Paladin|治疗|P6",
+        "en":  "Conqueror\u0027s Aegis Regalia",
+        "b2":  "Your Holy Shock critical heals now also place a periodic healing effect on the target, healing for 15% of the Holy Shock\u0027s heal amount over 9 sec.",
+        "b4":  "Your Sacred Shield can now trigger its effect every 4 sec instead of every 6."
+    },
+    {
+        "key":  "Druid|治疗|P6",
+        "en":  "Conqueror\u0027s Nightsong Regalia",
+        "b2":  "Increases the healing done by your Swiftmend spell by 10%.",
+        "b4":  "Your Rejuvenation spell also provides an instant heal for your target."
+    },
+    {
+        "key":  "Priest|治疗|P6",
+        "en":  "Conqueror\u0027s Sanctification Regalia",
+        "b2":  "Increases the critical heal chance of your Prayer of Healing by 10%.",
+        "b4":  "Casting Power Word: Shield also grants you 250 spell power for 5 sec."
+    },
+    {
+        "key":  "Druid|法系|P6",
+        "en":  "Conqueror\u0027s Nightsong Garb",
+        "b2":  "Increases the bonus granted by Eclipse for Starfire and Wrath by 7%.",
+        "b4":  "Each time your Insect Swarm deals damage, it has a chance to make your next Starfire cast within 10 sec instant. (Proc chance: 8%)"
+    },
+    {
+        "key":  "Shaman|治疗|P6",
+        "en":  "Conqueror\u0027s Worldbreaker Regalia",
+        "b2":  "Reduces the cooldown on Riptide by 1 sec.",
+        "b4":  "Reduces the cast time of Chain Heal by 0.2 sec."
+    },
+    {
+        "key":  "Shaman|物理|P6",
+        "en":  "Conqueror\u0027s Worldbreaker Battlegear",
+        "b2":  "Increases the damage done by Lava Lash and Stormstrike by 20%.",
+        "b4":  "Increases the frequency of Maelstrom Weapon being triggered by your melee weapon attacks by 20%."
+    },
+    {
+        "key":  "Shaman|法系|P6",
+        "en":  "Conqueror\u0027s Worldbreaker Garb",
+        "b2":  "Increases periodic damage done by your Flame Shock ability by 20%.",
+        "b4":  "Your critical strikes from Lightning Bolt cause the target to take nature damage equal to 8% of the Lightning Bolt\u0027s damage over 4 sec."
+    },
+    {
+        "key":  "Death knight|输出|P6",
+        "en":  "Darkruned Battlegear",
+        "b2":  "Increases the critical strike chance of Death Coil and Frost Strike by 8%.",
+        "b4":  "Increases the bonus damage done per disease by 20% on Blood Strike, Heart Strike, Obliterate, and Scourge Strike."
+    },
+    {
+        "key":  "Death knight|坦克|P6",
+        "en":  "Darkruned Plate",
+        "b2":  "Increases the damage done by Rune Strike by 10%.",
+        "b4":  "Anti-magic shell also grants you 10% reduction to physical damage taken."
+    },
+    {
+        "key":  "Shaman|物理|P4",
+        "en":  "Augur\u0027s Regalia",
+        "b2":  "Restores 5 mana per 5 sec.",
+        "b4":  null
+    },
+    {
+        "key":  "Rogue|输出|P4",
+        "en":  "Madcap\u0027s Outfit",
+        "b2":  "Increases attack power by 20.",
+        "b4":  null
+    },
+    {
+        "key":  "Druid|治疗|P4",
+        "en":  "Haruspex\u0027s Garb",
+        "b2":  "Restores 5 mana per 5 sec.",
+        "b4":  null
+    },
+    {
+        "key":  "Death knight|输出|P5",
+        "en":  null,
+        "b2":  null,
+        "b4":  null
+    },
+    {
+        "key":  "Death knight|坦克|P5",
+        "en":  null,
+        "b2":  null,
+        "b4":  null
+    },
+    {
+        "key":  "Paladin|输出|P5",
+        "en":  "Lightbringer Battlegear",
+        "b2":  "Your melee attacks have a chance to grant you 50 mana. (Proc chance: 20%)",
+        "b4":  "Increases the damage dealt by your Hammer of Wrath ability by 10%."
+    },
+    {
+        "key":  "Paladin|坦克|P5",
+        "en":  "Lightbringer Armor",
+        "b2":  "Increases the mana gained from your Spiritual Attunement ability by 10%.",
+        "b4":  "Increases the damage dealt by your Consecration ability by 10%."
+    },
+    {
+        "key":  "Priest|输出|P5",
+        "en":  "Absolution Regalia",
+        "b2":  "Increases the duration of your Shadow Word: Pain ability by 3 sec.",
+        "b4":  "Increases the damage from your Mind Blast ability by 10%."
+    },
+    {
+        "key":  "Priest|治疗|P5",
+        "en":  "Vestments of Absolution",
+        "b2":  "Reduces the mana cost of your Prayer of Healing ability by 10%.",
+        "b4":  "Increases the healing from your Greater Heal ability by 5%."
+    },
+    {
+        "key":  "Paladin|坦克|P3",
+        "en":  "Valorous Redemption Plate",
+        "b2":  "Increases the damage dealt by your Hammer of the Righteous by 10%.",
+        "b4":  "Increases the duration of your Divine Shield and Divine Protection by 3 seconds."
+    },
+    {
+        "key":  "Shaman|法系|P5",
+        "en":  "Skyshatter Regalia",
+        "b2":  "Whenever you have an air totem, an earth totem, a fire totem, and a water totem active at the same time, you gain 19 mana per 5 sec, 35 spell critical strike rating, and 45 spell power.",
+        "b4":  "Increases the damage dealt by your Lightning Bolt ability by 5%."
+    },
+    {
+        "key":  "Warlock|治疗|P5",
+        "en":  "Malefic Raiment",
+        "b2":  "Each time one of your Corruption or Immolate spells deals periodic damage, you heal 70 health.",
+        "b4":  "Increases the damage dealt by your Shadow Bolt and Incinerate abilities by 6%."
+    },
+    {
+        "key":  "Shaman|物理|P5",
+        "en":  "Skyshatter Harness",
+        "b2":  "Your Earth Shock, Flame Shock, and Frost Shock abilities cost 10% less mana.",
+        "b4":  "Whenever you use Stormstrike, you gain 70 attack power for 12 sec."
+    },
+    {
+        "key":  "Warrior|坦克|P5",
+        "en":  "Onslaught Armor",
+        "b2":  "Increases the health bonus from your Commanding Shout ability by 170.",
+        "b4":  "Increases the damage of your Shield Slam ability by 10%."
+    },
+    {
+        "key":  "Hunter|输出|P5",
+        "en":  "Gronnstalker\u0027s Armor",
+        "b2":  "Increases the mana you gain from your Aspect of the Viper by 25%.",
+        "b4":  "Increases the damage dealt by your Steady Shot ability by 10%."
+    },
+    {
+        "key":  "Druid|物理|P5",
+        "en":  "Thunderheart Harness",
+        "b2":  "Reduces the energy cost of your Mangle ability in Cat Form by 5 and increases the threat generated by your Mangle ability in Bear Form by 15%.",
+        "b4":  "Increases the damage dealt by your Rip, Swipe, and Ferocious Bite abilities by 15%."
+    },
+    {
+        "key":  "Druid|治疗|P5",
+        "en":  "Thunderheart Raiment",
+        "b2":  "Reduces the cooldown of your Swiftmend ability by 2 sec.",
+        "b4":  "Increases the healing from your Healing Touch ability by 5%."
+    },
+    {
+        "key":  "Rogue|输出|P5",
+        "en":  "Slayer\u0027s Armor",
+        "b2":  "Increases the haste from your Slice and Dice ability by 5%.",
+        "b4":  "Increases the damage dealt by your Backstab, Sinister Strike, Mutilate, and Hemorrhage abilities by 6%."
+    },
+    {
+        "key":  "Mage|输出|P5",
+        "en":  "Tempest Regalia",
+        "b2":  "Increases the duration of your Evocation ability by 2 sec.",
+        "b4":  "Increases the damage of your Fireball, Frostbolt, and Arcane Missiles abilities by 5%."
+    },
+    {
+        "key":  "Paladin|治疗|P5",
+        "en":  "Lightbringer Raiment",
+        "b2":  "Increases the spell power of your Flash of Light ability by 5%.",
+        "b4":  "Increases the critical strike chance of your Holy Light ability by 5%."
+    }
+]

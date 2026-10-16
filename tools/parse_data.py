@@ -311,6 +311,28 @@ SLOT_CN = {
     "Ranged": "远程", "Relic": "圣物",
 }
 
+def parse_sets(path):
+    sets = {}
+    for line in read(path).splitlines():
+        m = re.match(
+            r'\s*\["([^"]+)"\]\s*=\s*\{family\s*=\s*"([^"]*)",\s*pieces\s*=\s*\{([^}]*)\}\}',
+            line)
+        if not m:
+            continue
+        pieces = {int(a): b for a, b in re.findall(r'\[(\d+)\]="([^"]*)"', m.group(3))}
+        sets[m.group(1)] = {"family": m.group(2), "pieces": pieces}
+    return sets
+
+def common_prefix(names):
+    names = [n for n in names if n]
+    if not names:
+        return ""
+    p = names[0]
+    for n in names[1:]:
+        while p and not n.startswith(p):
+            p = p[:-1]
+    return p
+
 def main():
     base = os.path.join(SRC, "TitanBistooltip")
     items = parse_items(read(os.path.join(SRC, "TitanBistooltip_WS", "ws_equips.lua")))
@@ -356,7 +378,34 @@ def main():
             "source": pick_source(srcidx.get(i)),
         }
 
-    app = {"classes": classes, "items": out_items, "slotCN": SLOT_CN}
+    setmap = parse_sets(os.path.join(SRC, "TitanBistooltip_WS", "kp_set_index.lua"))
+    item2set = {}
+    for k, v in setmap.items():
+        for i in v["pieces"]:
+            item2set.setdefault(i, k)
+    used_sets = {}
+    for i in ref:
+        k = item2set.get(i)
+        if not k:
+            continue
+        out_items[str(i)]["set"] = k
+        used_sets.setdefault(k, dict(setmap[k]))
+    for k, v in used_sets.items():
+        raw = setmap[k]["pieces"]
+        v["pieces"] = [{"id": p, "slot": s,
+                        "name": items.get(p, {}).get("name") or ""}
+                       for p, s in raw.items()]
+        names = [x["name"] for x in v["pieces"] if x["name"]]
+        v["name"] = common_prefix(names)
+    need = []
+    for k, v in used_sets.items():
+        reps = [x["id"] for x in v["pieces"] if 0 < x["id"] < 100000]
+        rep = reps[0] if reps else None
+        need.append({"key": k, "repItem": rep})
+    json.dump(need, open(os.path.join(OUT, "sets_need.json"), "w", encoding="utf-8"),
+              ensure_ascii=False)
+
+    app = {"classes": classes, "items": out_items, "slotCN": SLOT_CN, "sets": used_sets}
     json.dump(app, open(os.path.join(OUT, "app_data.json"), "w", encoding="utf-8"),
               ensure_ascii=False)
     json.dump(sorted(ref), open(os.path.join(OUT, "ref_ids.json"), "w", encoding="utf-8"))
@@ -364,6 +413,7 @@ def main():
     print("referenced items:", len(ref), "missing:", len(missing), missing)
     nsrc = sum(1 for v in out_items.values() if v.get("source"))
     print("with source:", nsrc)
+    print("sets used:", len(used_sets), "set pieces:", sum(1 for v in out_items.values() if v.get("set")))
 
 if __name__ == "__main__":
     main()

@@ -428,6 +428,43 @@ fun ItemDetailDialog(item: ItemInfo, slot: String, onClose: () -> Unit) {
                     }
                 }
 
+                val setInfo = item.set?.let { DataRepository.sets[it] }
+                if (setInfo != null) {
+                    Spacer(Modifier.height(12.dp))
+                    HorizontalDivider(color = quality.copy(alpha = 0.25f))
+                    Spacer(Modifier.height(10.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("套装", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color(0xFFC79C6E))
+                        Spacer(Modifier.width(8.dp))
+                        Text(setInfo.name, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = quality)
+                        Text("（${setInfo.pieces.size} 件）", fontSize = 12.sp, color = Color(0xFF9A9480))
+                    }
+                    Spacer(Modifier.height(6.dp))
+                    setInfo.pieces.forEach { p ->
+                        val cur = p.id == item.id
+                        Row(Modifier.padding(vertical = 2.dp)) {
+                            Text(
+                                DataRepository.slotCN[p.slot] ?: p.slot,
+                                fontSize = 12.sp,
+                                color = Color(0xFF6E6A5E),
+                                modifier = Modifier.width(40.dp),
+                            )
+                            Text(
+                                p.name,
+                                fontSize = 13.sp,
+                                color = if (cur) quality else Color(0xFF9A9480),
+                                fontWeight = if (cur) FontWeight.Bold else FontWeight.Normal,
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
+                    }
+                    if (!setInfo.b2.isNullOrEmpty() || !setInfo.b4.isNullOrEmpty()) {
+                        Spacer(Modifier.height(8.dp))
+                        if (!setInfo.b2.isNullOrEmpty()) SetBonusLine("(2)", setInfo.b2)
+                        if (!setInfo.b4.isNullOrEmpty()) SetBonusLine("(4)", setInfo.b4)
+                    }
+                }
+
                 Spacer(Modifier.height(18.dp))
                 TextButton(
                     onClick = onClose,
@@ -458,6 +495,14 @@ fun StatLine(label: String, value: String, weapon: Boolean) {
             color = Color(0xFF1EFF00),
             fontWeight = FontWeight.Bold,
         )
+    }
+}
+
+@Composable
+fun SetBonusLine(tag: String, text: String) {
+    Row(Modifier.padding(vertical = 3.dp)) {
+        Text(tag, fontSize = 13.sp, color = Color(0xFFFFD100), fontWeight = FontWeight.Bold, modifier = Modifier.width(30.dp))
+        Text(text, fontSize = 12.sp, color = Color(0xFF1EFF00), modifier = Modifier.weight(1f))
     }
 }
 
